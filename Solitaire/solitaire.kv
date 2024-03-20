@@ -1,0 +1,75 @@
+#:kivy 1.11.0
+#:import kivy kivy
+#:import win kivy.core.window
+
+FloatLayout:
+    layout: layout
+    chooser: chooser
+
+    id: layout
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'bg.png'
+    
+    BoxLayout:
+        id: menu
+        orientation: 'horizontal'
+        size_hint: 1, None
+        height: app.menu_height
+        spacing: 0.01*win.Window.width
+        padding: app.pad_by, app.pad_by, app.pad_by, app.pad_by
+
+        canvas.before:
+            Color:
+                rgba: 0.1, 0.1, 0.1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Spinner:
+            id: chooser
+            size_hint: None, None
+            size: 0.18*win.Window.width, app.menu_height-2*app.pad_by
+
+        Button:
+            text: 'restart'
+            on_press: app.restart()
+            background_color: (0, 0, 0, 1)  # เปลี่ยนสีพื้นหลังของปุ่มเป็นสีดำ
+
+        Button:
+            text: 'undo'
+            on_press: app.undo()
+            background_color: (0, 0, 0, 1)  # เปลี่ยนสีพื้นหลังของปุ่มเป็นสีดำ
+
+        Button:
+            text: 'help'
+            on_press: app.help()
+            background_color: (0, 0, 0, 1)  # เปลี่ยนสีพื้นหลังของปุ่มเป็นสีดำ
+
+<Button>:
+    font_size: str(app.font_size) + "sp"
+    background_color: (0, 0, 0, 1)  # เปลี่ยนสีพื้นหลังของปุ่มเป็นสีดำ
+
+<CardImage>:
+    size_hint: None, None
+
+    canvas.before:
+        Color:
+            rgba: 1,1,0,self.alpha
+        BorderImage:
+            source: 'shadow32.png'
+            border: (2,2,2,2)
+            size:(self.width+4, self.height+4)
+            pos: (-2,-2+self.yoffset)
+
+<CardScatter>:
+    size_hint: None, None
+    do_rotation: False
+    do_scale: False
+
+<Counter>:
+    size_hint: 0.03, 0.03
+    text: str(self.count)
+    font_size: str(app.font_size) + "sp"
